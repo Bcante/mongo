@@ -46,7 +46,7 @@ public class AlbumInfo {
     public String toString() {
         return "mongo.AlbumInfo{" + "name=" + name + ", artist=" + artist + ", mbid=" + mbid + ", url=" + url + ", released=" + released + ", listeners=" + listeners + ", playcounts=" + playcounts + ", images=" + images + ", tracks=" + tracks + '}';
     }
-    public String backToBson() {
+    public Document backToBson() {
             BufferedWriter writer = null;
                 Document d = new Document();
                 d.append("name", name);
@@ -57,13 +57,13 @@ public class AlbumInfo {
                 d.append("listeners", listeners);
                 d.append("playcounts", playcounts);
                 d.append("tracks", tracks);
-                GsonBuilder builder = new GsonBuilder();
+                GsonBuilder builder = new  GsonBuilder();
                 builder.setPrettyPrinting();
                 Gson gson = builder.create();
-                System.out.println(gson.toJson(d));
-                //String str = d.toJson();
-                //System.out.println(str);
-        return null;
+                String resParsable = gson.toJson(d);
+                Document res = new Document();
+                res = res.parse(resParsable);
+            return res;
         }
    
     

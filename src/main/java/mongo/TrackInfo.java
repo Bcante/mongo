@@ -42,16 +42,14 @@ public class TrackInfo {
     public String toString() {
         return "mongo.TrackInfo{" + "name=" + name + ", mbid=" + mbid + ", url=" + url + ", artistTab=" + artistTab + ", duration=" + duration + ", tags=" + tags + '}';
     }
-    public String backToBson() {
-        BufferedWriter writer = null;
+    public Document backToBson() {
             Document d = new Document();
             d.append("name", name);
             d.append("mbid", mbid);
             d.append("duration", duration);
             d.append("artist", artistTab);
             d.append("tags", tags);
-            String str = d.toJson();
-    return null;
+    return d;
     }
     
 }

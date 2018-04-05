@@ -25,28 +25,31 @@ public class Mongo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //trackGetInfo("cher", "believe");
-        albumGetInfo("cher", "believe");
+        Document d1 = trackGetInfo("cher", "believe");
+        Document d2 = albumGetInfo("cher", "believe");
+        System.out.println("Res final: ");
+        System.out.println(d1);
+        System.out.println(d2);
     }
     
-    public static void trackGetInfo(String nomArtiste, String nomTrack){
+    public static Document trackGetInfo(String nomArtiste, String nomTrack){
         String baseUrl = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key="+key+"&artist="+nomArtiste+"&track="+nomTrack+"&format=json";
         System.out.println(baseUrl);
         String res = ht.sendGet(baseUrl);
         System.out.println(res);
-        createTrack(res);
+        return createTrack(res);
     }
     
-    public static void albumGetInfo(String nomArtiste, String nomAlbum) {
+    public static Document albumGetInfo(String nomArtiste, String nomAlbum) {
         String baseUrl = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key="+key+"&artist="+nomArtiste+"&album="+nomAlbum+"&format=json";
         String res = ht.sendGet(baseUrl);
-        createAlbum(res);
+        return createAlbum(res);
     }
     
     /*
     
     */
-    public static void createTrack(String json) {
+    public static Document createTrack(String json) {
         TrackInfo ti;
         String name, mbid, url, artistName, artistMbid;
         int duration = -1;
@@ -69,10 +72,10 @@ public class Mongo {
         artistMbid = d.get("mbid").toString();
         
         ti = new TrackInfo(name, mbid, url, artistName, artistMbid, duration, tags);
-        ti.backToBson();
+        return ti.backToBson();
     }
     
-    public static void createAlbum(String json) {
+    public static Document createAlbum(String json) {
         AlbumInfo ai;
         Document d = resetDoc(json,"album");
         String name = d.get("name").toString();
@@ -113,7 +116,8 @@ public class Mongo {
         }
         
         ai = new AlbumInfo(name, artist, mbid, url, released, listeners, playcount, listeImage, listeTracks);
-        ai.backToBson();
+        return ai.backToBson();
+
     }
     
     public static Document resetDoc(String json,String cible) {

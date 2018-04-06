@@ -27,9 +27,9 @@ public class Mongo {
     public static void main(String[] args) {
         Document d1 = trackGetInfo("cher", "believe");
         Document d2 = albumGetInfo("cher", "believe");
-        System.out.println("Res final: ");
-        System.out.println(d1);
-        System.out.println(d2);
+        MongoConn mongoConn = new MongoConn();
+        mongoConn.insereDoc(d1,"collectTest");
+
     }
     
     public static Document trackGetInfo(String nomArtiste, String nomTrack){

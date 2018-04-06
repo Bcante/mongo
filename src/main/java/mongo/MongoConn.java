@@ -1,5 +1,7 @@
 package mongo;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -18,5 +20,12 @@ public class MongoConn {
 		MongoCollection doc = base.getCollection(collection);
 		doc.insertOne(d);
 	}
+
+	public void delete(String mbid, String collection) {
+        BasicDBObject del = new BasicDBObject();
+        del.put("mbid", mbid);
+        MongoCollection coll = base.getCollection(collection);
+        System.out.println(coll.deleteOne(del));
+    }
 
 }

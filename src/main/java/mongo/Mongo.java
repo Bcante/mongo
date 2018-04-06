@@ -6,6 +6,8 @@ package mongo;/*
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.bson.BSON;
+import org.bson.BSONObject;
 import org.bson.Document;
 import tools.HTTPTools;
 import com.mongodb.DBObject;
@@ -25,11 +27,9 @@ public class Mongo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Document d1 = trackGetInfo("cher", "believe");
+        Document d1 = trackGetInfo("deep purple", "smoke on the water");
         Document d2 = albumGetInfo("cher", "believe");
         MongoConn mongoConn = new MongoConn();
-        mongoConn.insereDoc(d1,"collectTest");
-
     }
     
     public static Document trackGetInfo(String nomArtiste, String nomTrack){
